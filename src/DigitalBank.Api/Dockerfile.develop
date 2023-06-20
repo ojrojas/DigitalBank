@@ -1,0 +1,20 @@
+﻿#See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
+
+FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
+
+ARG BUILD_CONFIGURATION=Debug
+ENV ASPNETCORE_ENVIRONMENT=Development
+ENV DOTNET_USE_POLLING_FILE_WATCHER=true
+
+WORKDIR /app
+EXPOSE 80
+
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+WORKDIR /src
+COPY ["src/DigitalBank.Api/DigitalBank.Api.csproj", "src/DigitalBank.Api/"]
+RUN dotnet restore "src/DigitalBank.Api/DigitalBank.Api.csproj"
+COPY . .
+WORKDIR "/src/src/DigitalBank.Api"
+RUN dotnet build "DigitalBank.Api.csproj" -c $BUILD_CONFIGURATION
+
+ENTRYPOINT ["dotnet", "run", "--no-build", "--no-launch-profile", "-c", "$BUILD_CONFIGURATION", "--"]

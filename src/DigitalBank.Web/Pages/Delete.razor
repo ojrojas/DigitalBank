@@ -1,0 +1,40 @@
+﻿@page "/Delete/{Id}"
+@inject IPersonService _personService
+@inject NavigationManager Navigation
+
+<PageTitle>Delete</PageTitle>
+<h1>Delete Person</h1>
+<dl>
+    <dt>Id</dt>
+    <dd>@person.Id</dd>
+    <dt>Name</dt>
+    <dd>@person.Name</dd>
+    <dt>BirthDate</dt>
+    <dd>@person.BirthDate.ToShortDateString()</dd>
+    <dt>TypeSex</dt>
+    <dd>@person.TypeSex</dd>
+    <dt>CreatedOn</dt>
+    <dd>@person.CreatedOn.ToShortDateString()</dd>
+    <dt>UpdatedOn</dt>
+    <dd>@person.UpdatedOn.ToShortDateString()</dd>
+</dl>
+<div>
+    <button @onclick='()=> Navigation.NavigateTo("/")' class="btn btn-secondary">Cancel</button>
+    <button @onclick="()=> DeletePersonAsync(person)" class="btn btn-danger">Delete</button>
+</div>
+
+@code{
+    [Parameter]
+    public string Id { get; set; }
+    private Data.Person person = new Data.Person();
+
+    protected override async Task OnInitializedAsync()
+    {
+        person = await _personService.GetPersonByIdAsync(Guid.Parse(Id));
+    }
+    private void DeletePersonAsync(Data.Person person)
+    {
+        _personService.DeletePersonAsync(person.Id);
+        Navigation.NavigateTo("/");
+    }
+}

@@ -1,0 +1,36 @@
+﻿@page "/Display/{Id}"
+@inject IPersonService _personService
+@inject NavigationManager Navigation
+
+<PageTitle>Display</PageTitle>
+<h1>Display Person</h1>
+<dl>
+    <dt>Id</dt>
+    <dd>@person.Id</dd>
+    <dt>Name</dt>
+    <dd>@person.Name</dd>
+    <dt>BirthDate</dt>
+    <dd>@person.BirthDate.ToShortDateString()</dd>
+    <dt>TypeSex</dt>
+    <dd>@person.TypeSex</dd>
+    <dt>CreatedOn</dt>
+    <dd>@person.CreatedOn.ToShortDateString()</dd>
+    <dt>UpdatedOn</dt>
+    <dd>@person.UpdatedOn.ToShortDateString()</dd>
+</dl>
+<div>
+    <button @onclick='()=> Navigation.NavigateTo("/")' class="btn btn-secondary">Cancel</button>
+    <button @onclick='()=> Navigation.NavigateTo($"/Edit/{person.Id}")' class="btn btn-primary">Edit</button>
+    <button @onclick='()=> Navigation.NavigateTo($"/Delete/{person.Id}")' class="btn btn-danger">Delete</button>
+</div>
+
+@code{
+    [Parameter]
+    public string Id { get; set; }
+    private Data.Person person = new Data.Person();
+
+    protected override async Task OnInitializedAsync()
+    {
+        person = await _personService.GetPersonByIdAsync(Guid.Parse(Id));
+    }
+}

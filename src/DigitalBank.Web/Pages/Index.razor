@@ -1,0 +1,95 @@
+﻿@page "/"
+@inject IPersonService _personService
+@inject NavigationManager Navigation
+<PageTitle>Index</PageTitle>
+
+<h1>Person list</h1>
+<div>
+    <button class="btn btn-primary" @onclick="()=> NavigateToCreate()">Create</button>
+</div>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+                Id
+            </th>
+            <th>
+                Name
+            </th>
+            <th>
+                Birthdate
+            </th>
+            <th>
+                Type sex
+            </th>
+            <th>
+                CreatedOn
+            </th>
+            <th colspan="3">
+                Actions
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var person in Persons)
+        {
+            <tr>
+                <td>@person.Id</td>
+                <td>@person.Name</td>
+                <td>@person.BirthDate.ToShortDateString()</td>
+                @if (person.TypeSex.Equals("0"))
+                {
+                    <td>Female</td>
+                }
+                else
+                {
+                    <td>Male</td>
+                }
+                <td>@person.CreatedOn.ToShortDateString()</td>
+                <td>
+                    <button @onclick="() => NavigateToEdit(person)" class="btn btn-info">Edit</button>
+                    <button @onclick="() => NavigateToDisplay(person)" class="btn btn-warning">Display</button>
+                    <button @onclick="() => NavigateToDelete(person)" class="btn btn-danger">Delete</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
+        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+        <li class="page-item"><a class="page-link" href="#">1</a></li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+    </ul>
+</nav>
+
+@code{
+    private IEnumerable<Data.Person> Persons = new List<Data.Person>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        Persons = await _personService.GetAllPersonsAsync();
+    }
+
+    private void NavigateToEdit(Data.Person person)
+    {
+        Navigation.NavigateTo($"/Edit/{person.Id}");
+    }
+
+    private void NavigateToDelete(Data.Person person)
+    {
+        Navigation.NavigateTo($"/Delete/{person.Id}");
+    }
+
+    private void NavigateToDisplay(Data.Person person)
+    {
+        Navigation.NavigateTo($"/Display/{person.Id}");
+    }
+
+    private void NavigateToCreate()
+    {
+        Navigation.NavigateTo($"/Create");
+    }
+}

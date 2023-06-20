@@ -1,0 +1,92 @@
+syntax = "proto3";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+
+option csharp_namespace = "DigitalBank.Grpc";
+
+package service;
+
+// The greeting service definition.
+service IntegrationPersonService {
+  // Sends a greeting
+  rpc CreatePerson (CreatePersonRequest) returns (CreatePersonResponse);
+  rpc UpdatePerson (UpdatePersonRequest) returns (UpdatePersonResponse);
+  rpc DeletePerson (DeletePersonRequest) returns (DeletePersonResponse);
+  rpc GetByIdPerson (GetByIdPersonRequest) returns (GetByIdPersonResponse);
+  rpc GetAllPersons (google.protobuf.Empty) returns (GetAllPersonsResponse);
+}
+
+// The request create Person
+message CreatePersonRequest {
+  string name = 1;
+  google.protobuf.Timestamp birthDate = 2;
+  string typeSex = 3;
+  google.protobuf.Timestamp createdOn = 4;
+}
+
+message CreatePersonResponse {
+  string id = 1;
+  string name = 2;
+  google.protobuf.Timestamp birthDate = 3;
+  string typeSex = 4;
+  google.protobuf.Timestamp createdOn = 5;
+}
+
+// The request update Person
+message UpdatePersonRequest {
+  string id = 1;
+  string name = 2;
+  google.protobuf.Timestamp birthDate = 3;
+  string typeSex = 4;
+  google.protobuf.Timestamp updateOn = 5;
+}
+
+message UpdatePersonResponse {
+  string id = 1;
+  string name = 2;
+  google.protobuf.Timestamp birthDate = 3;
+  string typeSex = 4;
+  google.protobuf.Timestamp updateOn = 5;
+}
+
+// The request delete Person
+
+message DeletePersonRequest {
+  string id = 1;
+}
+
+message DeletePersonResponse {
+  string id = 1;
+  string name = 2;
+  google.protobuf.Timestamp birthDate = 3;
+  string typeSex = 4;
+}
+
+// The request get by id Person 
+
+message GetByIdPersonRequest {
+  string id = 1;
+}
+
+message GetByIdPersonResponse {
+  string id = 1;
+  string name = 2;
+  google.protobuf.Timestamp birthDate = 3;
+  string typeSex = 4;
+  google.protobuf.Timestamp createdOn = 5;
+
+}
+
+// The request get all Persons
+
+message Person {
+  string Id = 1;
+  string name = 2;
+  google.protobuf.Timestamp birthDate = 3;
+  string typeSex = 4;
+  google.protobuf.Timestamp createdOn = 5;
+}
+
+message GetAllPersonsResponse {
+  repeated Person persons = 1;
+}

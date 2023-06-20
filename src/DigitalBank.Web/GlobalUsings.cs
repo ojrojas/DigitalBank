@@ -1,0 +1,14 @@
+﻿global using System;
+global using System.ComponentModel.DataAnnotations;
+global using System.IdentityModel.Tokens.Jwt;
+global using System.Security.Claims;
+global using System.Text;
+global using DigitalBank.Grpc;
+global using DigitalBank.Web.Data;
+global using DigitalBank.Web.Exceptions;
+global using DigitalBank.Web.Services;
+global using Google.Protobuf.WellKnownTypes;
+global using Grpc.Core;
+global using Grpc.Core.Interceptors;
+global using Microsoft.Extensions.Options;
+global using Microsoft.IdentityModel.Tokens;

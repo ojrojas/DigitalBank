@@ -1,0 +1,41 @@
+﻿@page "/Create"
+@inject IPersonService _personService
+@inject NavigationManager Navigation
+
+<PageTitle>Create</PageTitle>
+
+<h1>Person Create</h1>
+
+<EditForm Model="@person" style="width:500px">
+    <div class="mb-3">
+        <label for="name" class="form-label">Name</label>
+        <InputText type="text" class="form-control" id="name" aria-describedby="nameHelp" @bind-Value="person.Name" />
+        <div id="nameHelp" class="form-text">Property name is required</div>
+    </div>
+    <div class="mb-3">
+        <label for="birthdate" class="form-label">Birthdate</label>
+        <InputDate class="form-control" id="birthdate" aria-describedby="birthdateHelp" @bind-Value="person.BirthDate" />
+        <div id="birthdateHelp" class="form-text">Property birthdate is required</div>
+    </div>
+    <div class="mb-3">
+        <label for="typesex" class="form-label">TypeSex</label>
+        <InputSelect class="form-control" id="typesex" aria-describedby="typeSexHelp" @bind-Value="person.TypeSex">
+            <option value="0">Female</option>
+            <option value="1">Male</option>
+        </InputSelect>
+        <div id="typeSexHelp" class="form-text">Property typesex is required</div>
+    </div>
+    <button type="button" @onclick="async ()=> await CreatePersonAsync(person)" class="btn btn-primary">Submit</button>
+    <button type="button" @onclick='()=> Navigation.NavigateTo("/")' class="btn btn-primary">Cancel</button>
+</EditForm>
+
+@code{
+    public Data.Person person { get; set; } = new Data.Person { TypeSex = "0"};
+
+    private async Task CreatePersonAsync(Data.Person person)
+    {
+        person.CreatedOn = DateTime.UtcNow;
+        await _personService.CreatePersonAsync(person);
+        Navigation.NavigateTo("/");
+    }
+}

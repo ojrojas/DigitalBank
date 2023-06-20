@@ -1,0 +1,28 @@
+version: '3.4'
+
+services:
+
+  sqldata:
+    image: mcr.microsoft.com/azure-sql-edge
+
+  sqllog:
+    image: redis/redis-stack:latest
+
+  digitalbank.api:
+    image: ${DOCKER_REGISTRY-}digitalbank
+    build:
+      context: .
+      dockerfile: src/DigitalBank.Api/Dockerfile
+
+  digitalbank.grpc:
+    image: ${DOCKER_REGISTRY-}digitalbank
+    build:
+      context: .
+      dockerfile: src/DigitalBank.Grpc/Dockerfile
+
+
+  digitalbank.web:
+    image: ${DOCKER_REGISTRY-}digitalbank
+    build:
+      context: .
+      dockerfile: src/DigitalBank.Web/Dockerfile

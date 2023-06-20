@@ -1,0 +1,83 @@
+version: '3.4'
+
+services:
+
+  sqldata:
+    environment:
+      - 'MSSQL_SA_PASSWORD=Pass@word'
+      - 'MSSQL_USER=SA'
+      - 'ACCEPT_EULA=Y'
+    ports:
+      - "5433:1433"
+    volumes:
+      - sql2datastore:/var/opt/mssql
+    networks:
+      - sqldatanet
+
+  sqllog:
+    ports:
+      - "6379:6379"
+      - "8001:8001"
+    volumes:
+      - sqlloggstore:/data
+    networks:
+      - sqllognet
+
+  digitalbank.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ConnectionString=redis://sqllog:6379
+    ports:
+      - "80"
+      - "443"
+    volumes:
+      - ~/.aspnet/https:/root/.aspnet/https:ro
+      - ~/.microsoft/usersecrets:/root/.microsoft/usersecrets:ro
+    depends_on:
+      - sqllog
+    networks:
+      - sqllognet
+
+  digitalbank.grpc:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - Connection=Server=tcp:sqldata,1433;Database=DigitalBankDb;User Id=sa;Password=Pass@word;Persist Security Info=True;Encrypt=false
+      - GRPC_PORT=81
+    ports:
+      - "9302:81"
+    depends_on:
+      - sqldata
+    networks:
+      - digitalgrpcnet
+      - sqldatanet
+
+  digitalbank.web:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - GRPC_URL=http://digitalbank.grpc:81
+      - UrlApi=digitalbank.api:80
+    ports:
+      - "80"
+      - "443"
+    volumes:
+      - ~/.aspnet/https:/root/.aspnet/https:ro
+      - ~/.microsoft/usersecrets:/root/.microsoft/usersecrets:ro
+    networks:
+      - digitalgrpcnet
+      - sqllognet
+volumes:
+    sql2datastore:
+      external: false
+    sqlloggstore:
+      external: false
+
+networks:
+    sqldatanet:
+      driver: bridge
+    sqllognet:
+      driver: bridge
+    digitalgrpcnet:
+      driver: bridge
+

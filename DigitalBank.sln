@@ -1,0 +1,66 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{D9991E2C-8937-4410-A989-09AAF19D05C8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DigitalBank.Api", "src\DigitalBank.Api\DigitalBank.Api.csproj", "{AF826262-17E6-4F12-BACB-B21269B65998}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DigitalBank.Core", "src\DigitalBank.Core\DigitalBank.Core.csproj", "{92D02B16-3EF3-4BCD-8671-A4731A5FF7F6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DigitalBank.Grpc", "src\DigitalBank.Grpc\DigitalBank.Grpc.csproj", "{6A47F973-D6A2-4C08-AB5F-B7579ECE21EE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DigitalBank.Infraestructure", "src\DigitalBank.Infraestructure\DigitalBank.Infraestructure.csproj", "{D106E95C-4D56-4945-961C-4F15F2C94AE5}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{4AA5E8A4-8E7D-4B0F-A069-C7BDCAC2C3FE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{39EE78BD-F9E6-4BBD-804C-5BF692BA4141}"
+	ProjectSection(SolutionItems) = preProject
+		.env = .env
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DigitalBank.Web", "src\DigitalBank.Web\DigitalBank.Web.csproj", "{D5D83135-1C38-4E08-A724-D36D723473AE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AF826262-17E6-4F12-BACB-B21269B65998}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF826262-17E6-4F12-BACB-B21269B65998}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF826262-17E6-4F12-BACB-B21269B65998}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF826262-17E6-4F12-BACB-B21269B65998}.Release|Any CPU.Build.0 = Release|Any CPU
+		{92D02B16-3EF3-4BCD-8671-A4731A5FF7F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92D02B16-3EF3-4BCD-8671-A4731A5FF7F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92D02B16-3EF3-4BCD-8671-A4731A5FF7F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92D02B16-3EF3-4BCD-8671-A4731A5FF7F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A47F973-D6A2-4C08-AB5F-B7579ECE21EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A47F973-D6A2-4C08-AB5F-B7579ECE21EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A47F973-D6A2-4C08-AB5F-B7579ECE21EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A47F973-D6A2-4C08-AB5F-B7579ECE21EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D106E95C-4D56-4945-961C-4F15F2C94AE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D106E95C-4D56-4945-961C-4F15F2C94AE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D106E95C-4D56-4945-961C-4F15F2C94AE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D106E95C-4D56-4945-961C-4F15F2C94AE5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4AA5E8A4-8E7D-4B0F-A069-C7BDCAC2C3FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4AA5E8A4-8E7D-4B0F-A069-C7BDCAC2C3FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4AA5E8A4-8E7D-4B0F-A069-C7BDCAC2C3FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4AA5E8A4-8E7D-4B0F-A069-C7BDCAC2C3FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5D83135-1C38-4E08-A724-D36D723473AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5D83135-1C38-4E08-A724-D36D723473AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5D83135-1C38-4E08-A724-D36D723473AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5D83135-1C38-4E08-A724-D36D723473AE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{AF826262-17E6-4F12-BACB-B21269B65998} = {D9991E2C-8937-4410-A989-09AAF19D05C8}
+		{92D02B16-3EF3-4BCD-8671-A4731A5FF7F6} = {D9991E2C-8937-4410-A989-09AAF19D05C8}
+		{6A47F973-D6A2-4C08-AB5F-B7579ECE21EE} = {D9991E2C-8937-4410-A989-09AAF19D05C8}
+		{D106E95C-4D56-4945-961C-4F15F2C94AE5} = {D9991E2C-8937-4410-A989-09AAF19D05C8}
+		{D5D83135-1C38-4E08-A724-D36D723473AE} = {D9991E2C-8937-4410-A989-09AAF19D05C8}
+	EndGlobalSection
+EndGlobal

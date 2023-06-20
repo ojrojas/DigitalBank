@@ -1,0 +1,48 @@
+﻿@page "/Edit/{Id}"
+@inject IPersonService _personService
+@inject NavigationManager Navigation
+
+<PageTitle>Edit</PageTitle>
+
+<h1>Person Edit</h1>
+
+<EditForm Model="@person" style="width:500px">
+    <div class="mb-3">
+        <label for="name" class="form-label">Name</label>
+        <InputText type="text" class="form-control" id="name" aria-describedby="nameHelp" @bind-Value="person.Name" />
+        <div id="nameHelp" class="form-text">Property name is required</div>
+    </div>
+    <div class="mb-3">
+        <label for="birthdate" class="form-label">Birthdate</label>
+        <InputDate class="form-control" id="birthdate" aria-describedby="birthdateHelp" @bind-Value="person.BirthDate" />
+        <div id="birthdateHelp" class="form-text">Property birthdate is required</div>
+    </div>
+    <div class="mb-3">
+        <label for="typesex" class="form-label">TypeSex</label>
+        <InputSelect class="form-control" id="typesex" aria-describedby="typeSexHelp" @bind-Value="person.TypeSex">
+            <option value="0">Female</option>
+            <option value="1">Male</option>
+        </InputSelect>
+        <div id="typeSexHelp" class="form-text">Property typesex is required</div>
+    </div>
+    <button type="button" @onclick="async ()=> await UpdatePersonAsync(person)" class="btn btn-primary">Submit</button>
+    <button type="button" @onclick='()=> Navigation.NavigateTo("/")' class="btn btn-primary">Cancel</button>
+</EditForm>
+
+@code{
+    [Parameter]
+    public string Id { get; set; }
+    private Data.Person person = new Data.Person();
+
+    protected override async Task OnInitializedAsync()
+    {
+        person = await _personService.GetPersonByIdAsync(Guid.Parse(Id));
+    }
+
+    private async Task UpdatePersonAsync(Data.Person person)
+    {
+        person.UpdatedOn = DateTime.UtcNow;
+        await _personService.UpdatePersonAsync(person);
+        Navigation.NavigateTo("/");
+    }
+}
