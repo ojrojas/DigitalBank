@@ -19,15 +19,9 @@ public class PersonService : IPersonService
     {
         var request = MapperPersonGrpc.PersonToCreatePersonRequest(person);
 
-        var idlog = Guid.NewGuid();
         _logger.LogInformation("Create person request web");
         _logger.LogInformation("Grpc PersonService Create request {request}", request);
-        _logService.CreateLogAsync(new LogApplication {
-            Id = idlog.ToString(),
-            Logged = DateTime.UtcNow,
-            Message = "Create person request web",
-            LogLevel = "Info"
-        });
+       
         var response = await _client.CreatePersonAsync(request);
         _logger.LogInformation("Grpc PersonService Create response {response}", response);
         return MapperPersonGrpc.CreatePersonResponseToPerson(response);
@@ -35,16 +29,7 @@ public class PersonService : IPersonService
 
     public async Task<Data.Person> UpdatePersonAsync(Data.Person person)
     {
-        var idlog = Guid.NewGuid();
         var request = MapperPersonGrpc.PersonToUpdatePersonRequest(person);
-
-        _logService.CreateLogAsync(new LogApplication
-        {
-            Id = idlog.ToString(),
-            Logged = DateTime.UtcNow,
-            Message = "Grpc PersonService Update request {request}",
-            LogLevel = "Info"
-        });
 
         _logger.LogInformation("Update person request web");
         _logger.LogInformation("Grpc PersonService Update request {request}", request);
@@ -55,18 +40,8 @@ public class PersonService : IPersonService
 
     public async Task<Data.Person> DeletePersonAsync(Guid Id)
     {
-        var idlog = Guid.NewGuid();
-
         _logger.LogInformation("Delete person request web");
         _logger.LogInformation("Grpc PersonService Delete request {Id}", Id);
-
-        _logService.CreateLogAsync(new LogApplication
-        {
-            Id = idlog.ToString(),
-            Logged = DateTime.UtcNow,
-            Message = "Grpc PersonService Update request {request}",
-            LogLevel = "Info"
-        });
 
         var response = await _client.DeletePersonAsync(new DeletePersonRequest { Id = Id.ToString() });
         _logger.LogInformation("Grpc PersonService Delete response {response}", response);
@@ -75,18 +50,8 @@ public class PersonService : IPersonService
 
     public async Task<Data.Person> GetPersonByIdAsync(Guid Id)
     {
-        var idlog = Guid.NewGuid();
-
         _logger.LogInformation("Get by id person request web");
         _logger.LogInformation("Grpc PersonService Get by id request {Id}", Id);
-
-        _logService.CreateLogAsync(new LogApplication
-        {
-            Id = idlog.ToString(),
-            Logged = DateTime.UtcNow,
-            Message = "Grpc PersonService Update request {request}",
-            LogLevel = "Info"
-        });
 
         var response = await _client.GetByIdPersonAsync(new GetByIdPersonRequest { Id = Id.ToString() });
         _logger.LogInformation("Grpc PersonService Get by id response {response}", response);
@@ -97,17 +62,8 @@ public class PersonService : IPersonService
     {
         try
         {
-            var idlog = Guid.NewGuid();
             _logger.LogInformation("Get all persons request web");
             _logger.LogInformation("Grpc PersonService Get all request");
-
-            _logService.CreateLogAsync(new LogApplication
-            {
-                Id = idlog.ToString(),
-                Logged = DateTime.UtcNow,
-                Message = "Grpc PersonService Update request {request}",
-                LogLevel = "Info"
-            });
 
             var response = await _client.GetAllPersonsAsync(new Empty());
             _logger.LogInformation("Grpc PersonService Get all response {response}", response);

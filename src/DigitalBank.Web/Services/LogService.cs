@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Net;
+
 namespace DigitalBank.Web.Services;
 
 /// <summary>
@@ -34,15 +36,23 @@ public class LogService : ILogService
     /// <returns>Log application created</returns>
     public async ValueTask<LogApplication> CreateLogAsync(LogApplication logApplication)
     {
-        var token = await _tokenService.GetTokenAsync();
-        var client = CreateHttpClient(token);
-        var content = new StringContent(System.Text.Json.JsonSerializer.Serialize(logApplication));
-        var url = _configuration["UrlApi"];
-        HttpResponseMessage response = await client.PostAsync(url, content);
-        await HandlerResponse(response);
-        string serialize = await response.Content.ReadAsStringAsync();
-        var result = System.Text.Json.JsonSerializer.Deserialize<LogApplication>(serialize);
-        return result;
+        try
+        {
+            var token = await _tokenService.GetTokenAsync();
+            var client = CreateHttpClient(token);
+            var content = new StringContent(System.Text.Json.JsonSerializer.Serialize(logApplication));
+            var url = _configuration["UrlApi"];
+            HttpResponseMessage response = await client.PostAsync(url, content);
+            await HandlerResponse(response);
+            string serialize = await response.Content.ReadAsStringAsync();
+            var result = System.Text.Json.JsonSerializer.Deserialize<LogApplication>(serialize);
+            return result;
+        }
+        catch (Exception ex)
+        {
+            throw new InvalidOperationException(ex.Message, ex);
+        }
+        
     }
 
     /// <summary>
@@ -60,7 +70,12 @@ public class LogService : ILogService
                 ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErros) => true
             };
 
-            _client = new HttpClient(handler);
+            _client = new HttpClient(handler)
+            {
+                DefaultRequestVersion = HttpVersion.Version20,
+                DefaultVersionPolicy = HttpVersionPolicy.RequestVersionOrLower
+            };
+
             _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
         }
 

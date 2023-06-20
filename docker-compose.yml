@@ -1,7 +1,7 @@
 version: '3.4'
 
 services:
-
+  
   sqldata:
     image: mcr.microsoft.com/azure-sql-edge
 
@@ -19,7 +19,6 @@ services:
     build:
       context: .
       dockerfile: src/DigitalBank.Grpc/Dockerfile
-
 
   digitalbank.web:
     image: ${DOCKER_REGISTRY-}digitalbank

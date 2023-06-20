@@ -28,6 +28,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80
       - ConnectionString=redis://sqllog:6379
+      - API_PORT=80
     ports:
       - "80"
       - "443"
@@ -57,7 +58,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80
       - GRPC_URL=http://digitalbank.grpc:81
-      - UrlApi=digitalbank.api:80
+      - UrlApi=http://digitalbank.api/api/LoggerApplication
     ports:
       - "80"
       - "443"
@@ -67,6 +68,10 @@ services:
     networks:
       - digitalgrpcnet
       - sqllognet
+    depends_on:
+      - digitalbank.grpc
+      - digitalbank.api
+
 volumes:
     sql2datastore:
       external: false

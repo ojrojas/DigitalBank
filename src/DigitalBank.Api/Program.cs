@@ -1,4 +1,5 @@
 using DigitalBank.Api.DI;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -18,6 +19,16 @@ builder.Services.AddHostedService<RedisService>();
 
 builder.Services.AddJwtExtension(configuration);
 builder.Services.AddSwaggerGenDocumention();
+
+builder.WebHost.ConfigureKestrel(options =>
+{
+    // Setup a HTTP/2 endpoint without TLS.
+    options.Listen(System.Net.IPAddress.Any, configuration.GetValue("API_PORT", 5083), listenOptions =>
+    {
+        listenOptions.Protocols = HttpProtocols.Http2;
+    });
+});
+
 
 var app = builder.Build();
 

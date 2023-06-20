@@ -68,9 +68,10 @@
 @code{
     private IEnumerable<Data.Person> Persons = new List<Data.Person>();
 
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        Persons = await _personService.GetAllPersonsAsync();
+        if (firstRender)
+            Persons = await _personService.GetAllPersonsAsync();
     }
 
     private void NavigateToEdit(Data.Person person)
